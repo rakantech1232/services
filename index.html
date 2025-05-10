@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>VIP خدمات</title>
+  <style>
+    :root {
+      --gold: #d4af37;
+      --bg-dark: #0a0a0a;
+      --card-dark: #1a1a1a;
+      --border-dark: #333;
+      --text-light: #f2f2f2;
+      --text-muted: #aaa;
+    }
+    *,*:before,*:after{box-sizing:border-box}
+    body {margin:0;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:var(--bg-dark);color:var(--text-light);direction:rtl;text-align:right}
+    a{color:inherit;text-decoration:none}
+    header{text-align:center;padding:2rem 1rem}
+    header h1{font-size:2.1rem;margin:.5rem 0;line-height:1.5}
+    header p{font-size:1rem;color:#ccc;margin:.5rem 0 1.2rem}
+    .cta{display:inline-block;margin-top:1rem;background:var(--gold);color:#000;padding:.8rem 1.6rem;font-weight:bold;border-radius:8px;transition:.25s}
+    .cta:hover{opacity:.9;transform:translateY(-2px)}
+    .services{padding:2rem 1rem;text-align:center}
+    .services h2{margin-top:0;font-size:1.7rem}
+    .cards-wrapper{display:flex;flex-wrap:wrap;gap:1.5rem;justify-content:center}
+    .service-card{background:var(--card-dark);border:1px solid var(--border-dark);padding:1.4rem;width:310px;border-radius:12px;text-align:right;transition:.25s}
+    .service-card:hover{transform:translateY(-4px);box-shadow:0 8px 16px rgba(0,0,0,.45)}
+    .service-card h3{margin:0 0 .45rem;font-size:1.22rem}
+    .service-card p{color:var(--text-muted);font-size:.95rem;margin:.35rem 0 1rem;min-height:46px}
+    .price{font-size:1.25rem;color:var(--gold);margin:.45rem 0 1rem}
+    .order-btn{background:var(--gold);color:#000;padding:.5rem 1rem;font-weight:bold;border:none;border-radius:8px;cursor:pointer;transition:.25s}
+    .order-btn:hover{filter:brightness(1.1)}
+    .modal{display:none;position:fixed;inset:0;width:100%;height:100%;background:rgba(0,0,0,.85);justify-content:center;align-items:center;z-index:1000}
+    .modal-content{background:var(--card-dark);padding:2rem 1.5rem;border-radius:10px;width:335px;position:relative}
+    .modal-content h3{margin:0 0 1rem;font-size:1.22rem}
+    .modal-content label{display:block;margin:1rem 0 .3rem;font-size:.93rem}
+    .modal-content input{width:100%;padding:.55rem .6rem;border-radius:5px;border:none;margin-bottom:.2rem}
+    .modal-content button{background:var(--gold);color:#000;font-weight:bold;padding:.6rem 1rem;border:none;border-radius:5px;cursor:pointer;margin-top:1rem;transition:.25s}
+    .modal-content button:hover{filter:brightness(1.05)}
+    .modal-content .btn-secondary{background:#555;color:#fff;margin-left:.5rem}
+    .close-btn{position:absolute;top:6px;left:8px;background:transparent;border:none;font-size:1.45rem;color:#999;cursor:pointer}
+    footer{text-align:center;padding:1rem;border-top:1px solid var(--border-dark);color:#777;font-size:.9rem}
+  </style>
+</head>
+<body>
+  <header>
+    <div style="font-size:2.15rem;color:var(--gold)">&#x2666; خدمات VIP</div>
+    <h1>أسعار ماسبق شفتهم .. وماراح تحصل أقل منهم</h1>
+    <p>نقدم مجموعة من الخدمات المتنوعة ونحدثهم كل فترة باضافات جديدة حسب الطلب</p>
+    <a href="#services" class="cta">ابدأ معنا</a>
+  </header>
+
+  <!-- ======= SERVICES ======= -->
+  <section class="services" id="services">
+    <h2>خدماتنا</h2>
+    <div class="cards-wrapper">
+      <!-- مثال لخدمة واحدة مع إدخال السعر يدويًا بالريال لكل 1000 -->
+      <div class="service-card" data-service-id="8524" data-rate-sar="0.292">
+        <h3>لايكات انستقرام</h3>
+        <p>خدمة اضافة لايكات على بوست انستقرام</p>
+        <div class="price"><span class="rate-text">0.29</span> هللة / 1000 لايك</div>
+        <button class="order-btn">طلب الخدمة</button>
+      </div>
+      <!-- انسخ هذا البلوك مع تغيير data-service-id و data-rate-sar والسعر النصي -->
+    </div>
+  </section>
+
+  <!-- ======= MODAL ======= -->
+  <div class="modal" id="orderModal" aria-hidden="true">
+    <div class="modal-content" role="dialog" aria-modal="true">
+      <button class="close-btn" aria-label="إغلاق" onclick="closeModal()">×</button>
+
+      <!-- STEP 1 -->
+      <div id="step1">
+        <h3>إنشاء طلب جديد</h3>
+        <label for="postLink">رابط المنشور</label>
+        <input type="url" id="postLink" placeholder="ضع رابط المنشور هنا" required />
+        <label for="likeCount">الكمية المطلوبة</label>
+        <input type="number" id="likeCount" placeholder="مثلاً: 1000" min="1" required />
+        <label for="apiKey">الرقم السري</label>
+        <input type="text" id="apiKey" placeholder="ضع رقمك السري هنا" required />
+        <button onclick="goToStep2()">التالي</button>
+      </div>
+
+      <!-- STEP 2 -->
+      <div id="step2" style="display:none;">
+        <h3>تأكيد الطلب</h3>
+        <p>الرابط: <span id="confirmLink"></span></p>
+        <p>الكمية: <span id="confirmQty"></span></p>
+        <p>السعر لكل 1000: <span id="confirmRateK"></span> ريال</p>
+        <p>الإجمالي المطلوب: <strong><span id="totalCost"></span> ريال</strong></p>
+        <p>رصيدك الحالي: <strong><span id="currentBalance">…</span> ريال</strong></p>
+        <button class="btn-secondary" onclick="backToStep1()">رجوع</button>
+        <button onclick="submitOrder()">تأكيد الطلب</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>&copy; 2025 جميع الحقوق محفوظة للمبرمج راكان.</footer>
+
+  <script>
+  (()=>{
+    const API_BASE   = 'https://cors-anywhere.herokuapp.com/https://smmflare.com/api/v2';
+    const EX_RATE    = 6; // تحويل الرصيد من دولار ➜ ريال سعودي
+
+    /* ----------- HELPERS ---------- */
+    const $  = s=>document.querySelector(s);
+    const $$ = s=>document.querySelectorAll(s);
+    const fmt= (n,d=3)=>parseFloat(n).toFixed(d);
+
+    /* ----------- STATE ----------- */
+    let selServiceId  = null;
+    let selRateSarK   = 0;
+
+    /* ----------- OPEN MODAL ----------- */
+    $$('.order-btn').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const card = btn.closest('.service-card');
+        selServiceId = card.dataset.serviceId;
+        selRateSarK  = parseFloat(card.dataset.rateSar);
+        // reset inputs
+        ['postLink','likeCount','apiKey'].forEach(id=>$('#'+id).value='');
+        $('#step2').style.display='none';
+        $('#step1').style.display='block';
+        $('#orderModal').style.display='flex';
+      });
+    });
+
+    /* ----------- CLOSE MODAL ----------- */
+    function closeModal(){$('#orderModal').style.display='none';}
+    window.closeModal=closeModal;
+    window.addEventListener('click',e=>{if(e.target.id==='orderModal')closeModal()});
+    window.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+
+    /* ----------- STEP1 → STEP2 ----------- */
+    async function goToStep2(){
+      const link=$('#postLink').value.trim();
+      const qty = parseInt($('#likeCount').value,10);
+      const key = $('#apiKey').value.trim();
+      if(!link||qty<=0||!key){alert('يرجى تعبئة جميع الحقول.');return;}
+
+      const totalSar = (qty/1000) * selRateSarK;
+      $('#confirmLink').textContent  = link;
+      $('#confirmQty').textContent   = qty;
+      $('#confirmRateK').textContent = fmt(selRateSarK);
+      $('#totalCost').textContent    = fmt(totalSar);
+
+      /* ---- Fetch balance ---- */
+      try{
+        const res = await fetch(API_BASE,{method:'POST',mode:'cors',headers:{'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8','Accept':'application/json'},body:new URLSearchParams({key,action:'balance'})});
+        const data= await res.json();
+        if(data.error) throw new Error(data.error);
+        if(!data.balance) throw new Error('استجابة غير صالحة.');
+        const balanceSar = parseFloat(data.balance)*EX_RATE*3.75; // تحويل الرصيد من دولار ➜ ريال سعودي
+        $('#currentBalance').textContent = fmt(balanceSar);
+      }catch(err){alert('تعذر التأكد من الرصيد: '+err.message);return;}
+
+      $('#step1').style.display='none';
+      $('#step2').style.display='block';
+    }
+    window.goToStep2 = goToStep2;
+
+    /* ----------- BACK ----------- */
+    function backToStep1(){
+      $('#step2').style.display='none';
+      $('#step1').style.display='block';
+    }
+    window.backToStep1 = backToStep1;
+
+    /* ----------- SUBMIT ----------- */
+    async function submitOrder(){
+      const link = $('#confirmLink').textContent;
+      const qty  = $('#confirmQty').textContent;
+      const key  = $('#apiKey').value.trim();
+      try{
+        const res= await fetch(API_BASE,{method:'POST',mode:'cors',headers:{'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8','Accept':'application/json'},body:new URLSearchParams({key,action:'add',service:selServiceId,link,quantity:qty})});
+        const data= await res.json();
+        if(data.error) throw new Error(data.error);
+        if(!data.order) throw new Error('استجابة غير متوقعة');
+        alert(`تم إنشاء الطلب بنجاح! رقم الطلب: ${data.order}`);
+        closeModal();
+      }catch(err){alert('فشل إنشاء الطلب: '+err.message);}
+    }
+    window.submitOrder = submitOrder;
+  })();
+  </script>
+</body>
+</html>
