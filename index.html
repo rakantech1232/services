@@ -223,17 +223,6 @@
       box-shadow: 0 12px 24px rgba(96,113,58,0.20);
     }
 
-    .note {
-      margin-top: 16px;
-      padding: 14px 15px;
-      border-radius: 16px;
-      background: rgba(255,255,255,0.65);
-      border: 1px dashed rgba(122, 103, 66, 0.18);
-      font-size: 14px;
-      line-height: 1.9;
-      color: #7a6a52;
-    }
-
     .preview {
       padding: 18px;
     }
@@ -331,7 +320,6 @@
 </head>
 <body>
   <div class="page">
-
     <section class="hero panel">
       <div class="hero-content">
         <h1>معايدات عائلة الشريدة</h1>
@@ -367,11 +355,6 @@
         <div class="actions">
           <button class="btn-primary" id="generateBtn">تحديث المعايدة</button>
           <button class="btn-secondary" id="downloadBtn">حفظ / مشاركة الصورة</button>
-        </div>
-
-        <div class="note">
-          في الجوالات الحديثة سيظهر خيار المشاركة أو الحفظ مباشرة، وفي بعض الأجهزة قد يتم
-          فتح الصورة في نافذة مستقلة لتتمكن من حفظها يدويًا.
         </div>
       </aside>
 
@@ -449,14 +432,7 @@
       drawRoundedClip(box.x, box.y, box.w, box.h, 8);
       ctx.clip();
 
-      const fontSize = fitFontSize(
-        name,
-        box.w - 18,
-        30,
-        18,
-        "700",
-        "Cairo"
-      );
+      const fontSize = fitFontSize(name, box.w - 18, 30, 18, "700", "Cairo");
 
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
@@ -513,7 +489,6 @@
         const blob = await canvasToBlob();
         const file = new File([blob], fileName, { type: "image/png" });
 
-        // المسار الأفضل للجوالات الحديثة: مشاركة الملف مباشرة
         if (
           navigator.canShare &&
           navigator.share &&
@@ -527,7 +502,6 @@
           return;
         }
 
-        // fallback: تنزيل مباشر
         const url = URL.createObjectURL(blob);
         const link = document.createElement("a");
         link.href = url;
@@ -540,10 +514,8 @@
         setTimeout(() => {
           URL.revokeObjectURL(url);
         }, 1500);
-
       } catch (err) {
         try {
-          // fallback أخير: فتح الصورة في نافذة جديدة ليتم حفظها يدويًا
           const dataUrl = canvas.toDataURL("image/png");
           const win = window.open();
 
