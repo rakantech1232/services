@@ -337,7 +337,7 @@
         <h1>معايدات عائلة الشريدة</h1>
         <p>
           أهلاً بكم في صفحة المعايدات الرسمية. اكتب الاسم، وسيتم وضعه مباشرة داخل التصميم
-         بشكل أنيق
+          بشكل أنيق
         </p>
       </div>
     </section>
@@ -366,10 +366,13 @@
 
         <div class="actions">
           <button class="btn-primary" id="generateBtn">تحديث المعايدة</button>
-          <!-- <button class="btn-secondary" id="downloadBtn">تحميل الصورة</button> -->
+          <button class="btn-secondary" id="downloadBtn">حفظ / مشاركة الصورة</button>
         </div>
 
-        
+        <div class="note">
+          في الجوالات الحديثة سيظهر خيار المشاركة أو الحفظ مباشرة، وفي بعض الأجهزة قد يتم
+          فتح الصورة في نافذة مستقلة لتتمكن من حفظها يدويًا.
+        </div>
       </aside>
 
       <div class="panel preview">
@@ -382,7 +385,7 @@
         </div>
 
         <div class="footer">
-          جميع الحقوق محفوظة — 
+          جميع الحقوق محفوظة —
           <strong>صندوق قربى</strong>
         </div>
       </div>
@@ -469,30 +472,128 @@
       ctx.restore();
     }
 
-    function downloadImage() {
-      const name = (nameInput.value || "معايدة").trim();
-      const safeName = name
-        .replace(/[^\u0600-\u06FFa-zA-Z0-9\s_-]/g, "")
-        .replace(/\s+/g, "-");
+    function canvasToBlob() {
+      return new Promise((resolve, reject) => {
+        if (!canvas.toBlob) {
+          try {
+            const dataUrl = canvas.toDataURL("image/png");
+            const byteString = atob(dataUrl.split(",")[1]);
+            const mimeString = dataUrl.split(",")[0].split(":")[1].split(";")[0];
+            const ab = new ArrayBuffer(byteString.length);
+            const ia = new Uint8Array(ab);
 
-      if (canvas.toBlob) {
-        canvas.toBlob(function(blob) {
-          const url = URL.createObjectURL(blob);
-          const link = document.createElement("a");
-          link.href = url;
-          link.download = `معايدة-الشريدة-${safeName || "name"}.png`;
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-          setTimeout(() => URL.revokeObjectURL(url), 1000);
+            for (let i = 0; i < byteString.length; i++) {
+              ia[i] = byteString.charCodeAt(i);
+            }
+
+            resolve(new Blob([ab], { type: mimeString }));
+          } catch (err) {
+            reject(err);
+          }
+          return;
+        }
+
+        canvas.toBlob((blob) => {
+          if (blob) resolve(blob);
+          else reject(new Error("تعذر إنشاء الصورة"));
         }, "image/png");
-      } else {
+      });
+    }
+
+    async function downloadImage() {
+      try {
+        renderGreeting();
+
+        const name = (nameInput.value || "معايدة").trim();
+        const safeName = name
+          .replace(/[^\u0600-\u06FFa-zA-Z0-9\s_-]/g, "")
+          .replace(/\s+/g, "-");
+
+        const fileName = `معايدة-الشريدة-${safeName || "name"}.png`;
+        const blob = await canvasToBlob();
+        const file = new File([blob], fileName, { type: "image/png" });
+
+        // المسار الأفضل للجوالات الحديثة: مشاركة الملف مباشرة
+        if (
+          navigator.canShare &&
+          navigator.share &&
+          navigator.canShare({ files: [file] })
+        ) {
+          await navigator.share({
+            files: [file],
+            title: "معايدة عائلة الشريدة",
+            text: "تم إنشاء المعايدة بنجاح"
+          });
+          return;
+        }
+
+        // fallback: تنزيل مباشر
+        const url = URL.createObjectURL(blob);
         const link = document.createElement("a");
-        link.href = canvas.toDataURL("image/png");
-        link.download = `معايدة-الشريدة-${safeName || "name"}.png`;
+        link.href = url;
+        link.download = fileName;
+        link.rel = "noopener";
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
+
+        setTimeout(() => {
+          URL.revokeObjectURL(url);
+        }, 1500);
+
+      } catch (err) {
+        try {
+          // fallback أخير: فتح الصورة في نافذة جديدة ليتم حفظها يدويًا
+          const dataUrl = canvas.toDataURL("image/png");
+          const win = window.open();
+
+          if (win) {
+            win.document.write(`
+              <html dir="rtl">
+                <head>
+                  <meta charset="UTF-8" />
+                  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                  <title>حفظ الصورة</title>
+                  <style>
+                    body {
+                      margin: 0;
+                      padding: 20px;
+                      font-family: sans-serif;
+                      text-align: center;
+                      background: #f6f2ea;
+                    }
+                    .wrap {
+                      max-width: 720px;
+                      margin: 0 auto;
+                    }
+                    img {
+                      max-width: 100%;
+                      height: auto;
+                      border-radius: 12px;
+                      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+                    }
+                    p {
+                      color: #5a4b35;
+                      line-height: 1.8;
+                      font-size: 18px;
+                    }
+                  </style>
+                </head>
+                <body>
+                  <div class="wrap">
+                    <p>اضغط مطولاً على الصورة ثم اختر حفظ الصورة</p>
+                    <img src="${dataUrl}" alt="المعايدة" />
+                  </div>
+                </body>
+              </html>
+            `);
+            win.document.close();
+          } else {
+            alert("تعذر فتح نافذة الحفظ. جرّب استخدام متصفح أحدث.");
+          }
+        } catch (e) {
+          alert("تعذر حفظ الصورة على هذا الجهاز.");
+        }
       }
     }
 
@@ -517,7 +618,10 @@
     });
 
     generateBtn.addEventListener("click", renderGreeting);
-    downloadBtn.addEventListener("click", downloadImage);
+
+    if (downloadBtn) {
+      downloadBtn.addEventListener("click", downloadImage);
+    }
 
     nameInput.addEventListener("input", renderGreeting);
     nameInput.addEventListener("keydown", (e) => {
