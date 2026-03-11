@@ -2,188 +2,529 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>VIP خدمات</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>معايدات عائلة الشريدة | برمجة راكان منصور الشريدة</title>
+  <meta
+    name="description"
+    content="مولد معايدات عائلة الشريدة - برمجة وتطوير راكان منصور الشريدة"
+  />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800&family=Noto+Naskh+Arabic:wght@400;600;700&display=swap"
+    rel="stylesheet"
+  />
+
   <style>
     :root {
-      --gold: #d4af37;
-      --bg-dark: #0a0a0a;
-      --card-dark: #1a1a1a;
-      --border-dark: #333;
-      --text-light: #f2f2f2;
-      --text-muted: #aaa;
+      --bg: #f3eee4;
+      --panel: rgba(255, 250, 242, 0.9);
+      --border: rgba(122, 103, 66, 0.18);
+      --text: #4f4332;
+      --muted: #7f6c4f;
+      --gold: #c89b3c;
+      --gold-dark: #a67d2a;
+      --olive: #7a8d4b;
+      --olive-dark: #60713a;
+      --shadow: 0 18px 50px rgba(99, 81, 48, 0.12);
+      --radius: 24px;
     }
-    *,*:before,*:after{box-sizing:border-box}
-    body {margin:0;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:var(--bg-dark);color:var(--text-light);direction:rtl;text-align:right}
-    a{color:inherit;text-decoration:none}
-    header{text-align:center;padding:2rem 1rem}
-    header h1{font-size:2.1rem;margin:.5rem 0;line-height:1.5}
-    header p{font-size:1rem;color:#ccc;margin:.5rem 0 1.2rem}
-    .cta{display:inline-block;margin-top:1rem;background:var(--gold);color:#000;padding:.8rem 1.6rem;font-weight:bold;border-radius:8px;transition:.25s}
-    .cta:hover{opacity:.9;transform:translateY(-2px)}
-    .services{padding:2rem 1rem;text-align:center}
-    .services h2{margin-top:0;font-size:1.7rem}
-    .cards-wrapper{display:flex;flex-wrap:wrap;gap:1.5rem;justify-content:center}
-    .service-card{background:var(--card-dark);border:1px solid var(--border-dark);padding:1.4rem;width:310px;border-radius:12px;text-align:right;transition:.25s}
-    .service-card:hover{transform:translateY(-4px);box-shadow:0 8px 16px rgba(0,0,0,.45)}
-    .service-card h3{margin:0 0 .45rem;font-size:1.22rem}
-    .service-card p{color:var(--text-muted);font-size:.95rem;margin:.35rem 0 1rem;min-height:46px}
-    .price{font-size:1.25rem;color:var(--gold);margin:.45rem 0 1rem}
-    .order-btn{background:var(--gold);color:#000;padding:.5rem 1rem;font-weight:bold;border:none;border-radius:8px;cursor:pointer;transition:.25s}
-    .order-btn:hover{filter:brightness(1.1)}
-    .modal{display:none;position:fixed;inset:0;width:100%;height:100%;background:rgba(0,0,0,.85);justify-content:center;align-items:center;z-index:1000}
-    .modal-content{background:var(--card-dark);padding:2rem 1.5rem;border-radius:10px;width:335px;position:relative}
-    .modal-content h3{margin:0 0 1rem;font-size:1.22rem}
-    .modal-content label{display:block;margin:1rem 0 .3rem;font-size:.93rem}
-    .modal-content input{width:100%;padding:.55rem .6rem;border-radius:5px;border:none;margin-bottom:.2rem}
-    .modal-content button{background:var(--gold);color:#000;font-weight:bold;padding:.6rem 1rem;border:none;border-radius:5px;cursor:pointer;margin-top:1rem;transition:.25s}
-    .modal-content button:hover{filter:brightness(1.05)}
-    .modal-content .btn-secondary{background:#555;color:#fff;margin-left:.5rem}
-    .close-btn{position:absolute;top:6px;left:8px;background:transparent;border:none;font-size:1.45rem;color:#999;cursor:pointer}
-    footer{text-align:center;padding:1rem;border-top:1px solid var(--border-dark);color:#777;font-size:.9rem}
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Noto Naskh Arabic", serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top right, rgba(200, 155, 60, 0.10), transparent 25%),
+        radial-gradient(circle at bottom left, rgba(122, 141, 75, 0.10), transparent 25%),
+        linear-gradient(180deg, #f8f3eb 0%, var(--bg) 100%);
+      min-height: 100vh;
+    }
+
+    .page {
+      width: min(1180px, calc(100% - 28px));
+      margin: 0 auto;
+      padding: 24px 0 40px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, rgba(255,255,255,0.82), rgba(247,241,231,0.94));
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      padding: 28px 24px;
+      margin-bottom: 22px;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 15% 20%, rgba(200,155,60,0.10), transparent 18%),
+        radial-gradient(circle at 85% 70%, rgba(122,141,75,0.10), transparent 20%);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .hero h1 {
+      margin: 0 0 10px;
+      font-family: "Cairo", sans-serif;
+      font-size: clamp(30px, 5vw, 52px);
+      font-weight: 800;
+      line-height: 1.4;
+      color: #5a4b35;
+    }
+
+    .hero p {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.9;
+      color: var(--muted);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 400px 1fr;
+      gap: 22px;
+      align-items: start;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .controls {
+      padding: 22px;
+      position: sticky;
+      top: 18px;
+    }
+
+    .controls h2 {
+      margin: 0 0 6px;
+      font-family: "Cairo", sans-serif;
+      font-size: 30px;
+      font-weight: 800;
+      color: #5a4b35;
+    }
+
+    .controls .desc {
+      margin: 0 0 18px;
+      line-height: 1.9;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .owner-box {
+      background: linear-gradient(135deg, rgba(200,155,60,0.12), rgba(122,141,75,0.10));
+      border: 1px solid rgba(122,103,66,0.14);
+      border-radius: 20px;
+      padding: 16px;
+      margin-bottom: 18px;
+    }
+
+    .owner-box strong {
+      display: block;
+      font-size: 15px;
+      color: #6d5a3f;
+      margin-bottom: 8px;
+    }
+
+    .owner-box .owner-name {
+      font-family: "Cairo", sans-serif;
+      font-size: 26px;
+      font-weight: 800;
+      color: #4f412d;
+      line-height: 1.5;
+    }
+
+    .field {
+      margin-bottom: 14px;
+    }
+
+    .field label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 15px;
+      font-weight: 700;
+      color: #67563d;
+    }
+
+    .field input {
+      width: 100%;
+      border: 1px solid rgba(122, 103, 66, 0.16);
+      background: #fffdf9;
+      color: #4b3f2f;
+      border-radius: 16px;
+      padding: 15px 16px;
+      font-size: 20px;
+      font-family: "Noto Naskh Arabic", serif;
+      outline: none;
+      transition: 0.2s ease;
+    }
+
+    .field input:focus {
+      border-color: rgba(200, 155, 60, 0.55);
+      box-shadow: 0 0 0 4px rgba(200, 155, 60, 0.10);
+    }
+
+    .actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    button {
+      border: none;
+      cursor: pointer;
+      border-radius: 16px;
+      padding: 14px 16px;
+      font-size: 16px;
+      font-weight: 700;
+      font-family: "Noto Naskh Arabic", serif;
+      transition: transform 0.15s ease, opacity 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+    }
+
+    button:active {
+      transform: translateY(1px);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      color: #fffaf2;
+      box-shadow: 0 12px 24px rgba(166,125,42,0.24);
+    }
+
+    .btn-secondary {
+      background: linear-gradient(135deg, var(--olive), var(--olive-dark));
+      color: #fffef8;
+      box-shadow: 0 12px 24px rgba(96,113,58,0.20);
+    }
+
+    .note {
+      margin-top: 16px;
+      padding: 14px 15px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.65);
+      border: 1px dashed rgba(122, 103, 66, 0.18);
+      font-size: 14px;
+      line-height: 1.9;
+      color: #7a6a52;
+    }
+
+    .preview {
+      padding: 18px;
+    }
+
+    .preview-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .preview-head h3 {
+      margin: 0;
+      font-family: "Cairo", sans-serif;
+      font-size: 26px;
+      font-weight: 800;
+      color: #5a4b35;
+    }
+
+    .preview-head span {
+      color: #7b6a51;
+      font-size: 14px;
+    }
+
+    .canvas-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(180deg, #f7f1e6, #efe6d7);
+      border: 1px solid rgba(122, 103, 66, 0.10);
+      border-radius: 22px;
+      padding: 16px;
+      overflow: hidden;
+    }
+
+    canvas {
+      width: min(100%, 566px);
+      height: auto;
+      display: block;
+      border-radius: 18px;
+      box-shadow: 0 20px 40px rgba(86, 68, 38, 0.12);
+      background: #f5efe5;
+    }
+
+    .footer {
+      margin-top: 18px;
+      text-align: center;
+      color: #7b6a51;
+      font-size: 15px;
+      line-height: 1.9;
+    }
+
+    .footer strong {
+      color: #5a4b35;
+    }
+
+    @media (max-width: 960px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .controls {
+        position: static;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .page {
+        width: min(100% - 16px, 1180px);
+        padding-top: 14px;
+      }
+
+      .hero,
+      .controls,
+      .preview {
+        padding: 16px;
+      }
+
+      .actions {
+        grid-template-columns: 1fr;
+      }
+
+      .hero p,
+      .controls .desc {
+        font-size: 15px;
+      }
+
+      .owner-box .owner-name {
+        font-size: 22px;
+      }
+    }
   </style>
 </head>
 <body>
-  <header>
-    <div style="font-size:2.15rem;color:var(--gold)">&#x2666; خدمات VIP</div>
-    <h1>أسعار ماسبق شفتهم .. وماراح تحصل أقل منهم</h1>
-    <p>نقدم مجموعة من الخدمات المتنوعة ونحدثهم كل فترة باضافات جديدة حسب الطلب</p>
-    <a href="https://wa.me/966502555462" class="cta">ابدأ معنا</a>
-  </header>
+  <div class="page">
 
-  <!-- ======= SERVICES ======= -->
-  <section class="services" id="services">
-    <h2>خدماتنا</h2>
-    <div class="cards-wrapper">
-      <!-- مثال لخدمة واحدة مع إدخال السعر يدويًا بالريال لكل 1000 -->
-      <div class="service-card" data-service-id="8524" data-rate-sar="0.292">
-        <h3>لايكات انستقرام</h3>
-        <p>خدمة اضافة لايكات على بوست انستقرام</p>
-        <div class="price"><span class="rate-text">0.29</span> هللة / 1000 لايك</div>
-        <button class="order-btn">طلب الخدمة</button>
+    <section class="hero panel">
+      <div class="hero-content">
+        <h1>معايدات عائلة الشريدة</h1>
+        <p>
+          أهلاً بكم في صفحة المعايدات الرسمية. اكتب الاسم، وسيتم وضعه مباشرة داخل التصميم
+         بشكل أنيق
+        </p>
       </div>
-      <!-- انسخ هذا البلوك مع تغيير data-service-id و data-rate-sar والسعر النصي -->
-    </div>
-  </section>
+    </section>
 
-  <!-- ======= MODAL ======= -->
-  <div class="modal" id="orderModal" aria-hidden="true">
-    <div class="modal-content" role="dialog" aria-modal="true">
-      <button class="close-btn" aria-label="إغلاق" onclick="closeModal()">×</button>
+    <section class="layout">
+      <aside class="panel controls">
+        <h2>أنشئ المعايدة</h2>
+        <p class="desc">
+          اكتب الاسم في الخانة التالية، وسيظهر مباشرة داخل التصميم.
+        </p>
 
-      <!-- STEP 1 -->
-      <div id="step1">
-        <h3>إنشاء طلب جديد</h3>
-        <label for="postLink">رابط المنشور</label>
-        <input type="url" id="postLink" placeholder="ضع رابط المنشور هنا" required />
-        <label for="likeCount">الكمية المطلوبة</label>
-        <input type="number" id="likeCount" placeholder="مثلاً: 1000" min="1" required />
-        <label for="apiKey">الرقم السري</label>
-        <input type="text" id="apiKey" placeholder="ضع رقمك السري هنا" required />
-        <button onclick="goToStep2()">التالي</button>
+        <div class="owner-box">
+          <strong>كل عام وأنتم بخير وعيدكم مبارك عائلتي الكريمة</strong>
+          <div class="owner-name">راكان منصور الشريدة</div>
+        </div>
+
+        <div class="field">
+          <label for="nameInput">الاسم المراد كتابته داخل المعايدة</label>
+          <input
+            id="nameInput"
+            type="text"
+            maxlength="28"
+            placeholder="اكتب اسمك كامل هنا"
+          />
+        </div>
+
+        <div class="actions">
+          <button class="btn-primary" id="generateBtn">تحديث المعايدة</button>
+          <!-- <button class="btn-secondary" id="downloadBtn">تحميل الصورة</button> -->
+        </div>
+
+        
+      </aside>
+
+      <div class="panel preview">
+        <div class="preview-head">
+          <h3>المعاينة المباشرة</h3>
+        </div>
+
+        <div class="canvas-wrap">
+          <canvas id="greetingCanvas" width="566" height="705"></canvas>
+        </div>
+
+        <div class="footer">
+          جميع الحقوق محفوظة — 
+          <strong>صندوق قربى</strong>
+        </div>
       </div>
-
-      <!-- STEP 2 -->
-      <div id="step2" style="display:none;">
-        <h3>تأكيد الطلب</h3>
-        <p>الرابط: <span id="confirmLink"></span></p>
-        <p>الكمية: <span id="confirmQty"></span></p>
-        <p>السعر لكل 1000: <span id="confirmRateK"></span> ريال</p>
-        <p>الإجمالي المطلوب: <strong><span id="totalCost"></span> ريال</strong></p>
-        <p>رصيدك الحالي: <strong><span id="currentBalance">…</span> ريال</strong></p>
-        <button class="btn-secondary" onclick="backToStep1()">رجوع</button>
-        <button onclick="submitOrder()">تأكيد الطلب</button>
-      </div>
-    </div>
+    </section>
   </div>
 
-  <footer>&copy; 2025 جميع الحقوق محفوظة للمبرمج راكان.</footer>
-
   <script>
-  (()=>{
-    const API_BASE   = 'https://cors-anywhere.herokuapp.com/https://smmflare.com/api/v2';
-    const EX_RATE    = 6; // تحويل الرصيد من دولار ➜ ريال سعودي
+    const canvas = document.getElementById("greetingCanvas");
+    const ctx = canvas.getContext("2d");
+    const nameInput = document.getElementById("nameInput");
+    const generateBtn = document.getElementById("generateBtn");
+    const downloadBtn = document.getElementById("downloadBtn");
 
-    /* ----------- HELPERS ---------- */
-    const $  = s=>document.querySelector(s);
-    const $$ = s=>document.querySelectorAll(s);
-    const fmt= (n,d=3)=>parseFloat(n).toFixed(d);
+    const templateImage = new Image();
+    templateImage.src = "ddd.jpg";
 
-    /* ----------- STATE ----------- */
-    let selServiceId  = null;
-    let selRateSarK   = 0;
+    let imageReady = false;
+    let fontsReady = false;
 
-    /* ----------- OPEN MODAL ----------- */
-    $$('.order-btn').forEach(btn=>{
-      btn.addEventListener('click',()=>{
-        const card = btn.closest('.service-card');
-        selServiceId = card.dataset.serviceId;
-        selRateSarK  = parseFloat(card.dataset.rateSar);
-        // reset inputs
-        ['postLink','likeCount','apiKey'].forEach(id=>$('#'+id).value='');
-        $('#step2').style.display='none';
-        $('#step1').style.display='block';
-        $('#orderModal').style.display='flex';
-      });
+    function fitFontSize(text, maxWidth, startSize, minSize, weight, family) {
+      let size = startSize;
+      while (size >= minSize) {
+        ctx.font = `${weight} ${size}px "${family}"`;
+        const width = ctx.measureText(text).width;
+        if (width <= maxWidth) return size;
+        size -= 1;
+      }
+      return minSize;
+    }
+
+    function drawRoundedClip(x, y, w, h, r) {
+      ctx.beginPath();
+      ctx.moveTo(x + r, y);
+      ctx.lineTo(x + w - r, y);
+      ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+      ctx.lineTo(x + w, y + h - r);
+      ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+      ctx.lineTo(x + r, y + h);
+      ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+      ctx.lineTo(x, y + r);
+      ctx.quadraticCurveTo(x, y, x + r, y);
+      ctx.closePath();
+    }
+
+    function renderGreeting() {
+      if (!imageReady || !fontsReady) return;
+
+      const name = (nameInput.value || "").trim() || "الاسم يظهر هنا";
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(templateImage, 0, 0, canvas.width, canvas.height);
+
+      const box = {
+        x: 140,
+        y: 520,
+        w: 293,
+        h: 47
+      };
+
+      ctx.save();
+      drawRoundedClip(box.x, box.y, box.w, box.h, 8);
+      ctx.clip();
+
+      const fontSize = fitFontSize(
+        name,
+        box.w - 18,
+        30,
+        18,
+        "700",
+        "Cairo"
+      );
+
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillStyle = "#3f3425";
+      ctx.font = `700 ${fontSize}px "Cairo"`;
+
+      ctx.fillText(
+        name,
+        box.x + box.w / 2,
+        box.y + box.h / 2 + 1
+      );
+
+      ctx.restore();
+    }
+
+    function downloadImage() {
+      const name = (nameInput.value || "معايدة").trim();
+      const safeName = name
+        .replace(/[^\u0600-\u06FFa-zA-Z0-9\s_-]/g, "")
+        .replace(/\s+/g, "-");
+
+      if (canvas.toBlob) {
+        canvas.toBlob(function(blob) {
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement("a");
+          link.href = url;
+          link.download = `معايدة-الشريدة-${safeName || "name"}.png`;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          setTimeout(() => URL.revokeObjectURL(url), 1000);
+        }, "image/png");
+      } else {
+        const link = document.createElement("a");
+        link.href = canvas.toDataURL("image/png");
+        link.download = `معايدة-الشريدة-${safeName || "name"}.png`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+    }
+
+    templateImage.onload = () => {
+      imageReady = true;
+      renderGreeting();
+    };
+
+    templateImage.onerror = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "#8b6f45";
+      ctx.font = '700 22px "Noto Naskh Arabic"';
+      ctx.textAlign = "center";
+      ctx.fillText("تعذر تحميل الصورة ddd.jpg", canvas.width / 2, canvas.height / 2 - 16);
+      ctx.font = '400 18px "Noto Naskh Arabic"';
+      ctx.fillText("ضع الصورة في نفس المجلد مع ملف index.html", canvas.width / 2, canvas.height / 2 + 18);
+    };
+
+    document.fonts.ready.then(() => {
+      fontsReady = true;
+      renderGreeting();
     });
 
-    /* ----------- CLOSE MODAL ----------- */
-    function closeModal(){$('#orderModal').style.display='none';}
-    window.closeModal=closeModal;
-    window.addEventListener('click',e=>{if(e.target.id==='orderModal')closeModal()});
-    window.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+    generateBtn.addEventListener("click", renderGreeting);
+    downloadBtn.addEventListener("click", downloadImage);
 
-    /* ----------- STEP1 → STEP2 ----------- */
-    async function goToStep2(){
-      const link=$('#postLink').value.trim();
-      const qty = parseInt($('#likeCount').value,10);
-      const key = $('#apiKey').value.trim();
-      if(!link||qty<=0||!key){alert('يرجى تعبئة جميع الحقول.');return;}
-
-      const totalSar = (qty/1000) * selRateSarK;
-      $('#confirmLink').textContent  = link;
-      $('#confirmQty').textContent   = qty;
-      $('#confirmRateK').textContent = fmt(selRateSarK);
-      $('#totalCost').textContent    = fmt(totalSar);
-
-      /* ---- Fetch balance ---- */
-      try{
-        const res = await fetch(API_BASE,{method:'POST',mode:'cors',headers:{'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8','Accept':'application/json'},body:new URLSearchParams({key,action:'balance'})});
-        const data= await res.json();
-        if(data.error) throw new Error(data.error);
-        if(!data.balance) throw new Error('استجابة غير صالحة.');
-        const balanceSar = parseFloat(data.balance)*EX_RATE*3.75; // تحويل الرصيد من دولار ➜ ريال سعودي
-        $('#currentBalance').textContent = fmt(balanceSar);
-      }catch(err){alert('تعذر التأكد من الرصيد: '+err.message);return;}
-
-      $('#step1').style.display='none';
-      $('#step2').style.display='block';
-    }
-    window.goToStep2 = goToStep2;
-
-    /* ----------- BACK ----------- */
-    function backToStep1(){
-      $('#step2').style.display='none';
-      $('#step1').style.display='block';
-    }
-    window.backToStep1 = backToStep1;
-
-    /* ----------- SUBMIT ----------- */
-    async function submitOrder(){
-      const link = $('#confirmLink').textContent;
-      const qty  = $('#confirmQty').textContent;
-      const key  = $('#apiKey').value.trim();
-      try{
-        const res= await fetch(API_BASE,{method:'POST',mode:'cors',headers:{'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8','Accept':'application/json'},body:new URLSearchParams({key,action:'add',service:selServiceId,link,quantity:qty})});
-        const data= await res.json();
-        if(data.error) throw new Error(data.error);
-        if(!data.order) throw new Error('استجابة غير متوقعة');
-        alert(`تم إنشاء الطلب بنجاح! رقم الطلب: ${data.order}`);
-        closeModal();
-      }catch(err){alert('فشل إنشاء الطلب: '+err.message);}
-    }
-    window.submitOrder = submitOrder;
-  })();
+    nameInput.addEventListener("input", renderGreeting);
+    nameInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        renderGreeting();
+      }
+    });
   </script>
 </body>
 </html>
