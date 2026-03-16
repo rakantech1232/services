@@ -1,9 +1,606 @@
 <!DOCTYPE html>
-<html>
+<html lang="ar" dir="rtl">
 <head>
-<title>About</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>معايدات عائلة الشريدة | برمجة راكان منصور الشريدة</title>
+  <meta
+    name="description"
+    content="مولد معايدات عائلة الشريدة - برمجة وتطوير راكان منصور الشريدة"
+  />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800&family=Noto+Naskh+Arabic:wght@400;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    :root {
+      --bg: #f3eee4;
+      --panel: rgba(255, 250, 242, 0.9);
+      --border: rgba(122, 103, 66, 0.18);
+      --text: #4f4332;
+      --muted: #7f6c4f;
+      --gold: #c89b3c;
+      --gold-dark: #a67d2a;
+      --olive: #7a8d4b;
+      --olive-dark: #60713a;
+      --shadow: 0 18px 50px rgba(99, 81, 48, 0.12);
+      --radius: 24px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Noto Naskh Arabic", serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top right, rgba(200, 155, 60, 0.10), transparent 25%),
+        radial-gradient(circle at bottom left, rgba(122, 141, 75, 0.10), transparent 25%),
+        linear-gradient(180deg, #f8f3eb 0%, var(--bg) 100%);
+      min-height: 100vh;
+    }
+
+    .page {
+      width: min(1180px, calc(100% - 28px));
+      margin: 0 auto;
+      padding: 24px 0 40px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, rgba(255,255,255,0.82), rgba(247,241,231,0.94));
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      padding: 28px 24px;
+      margin-bottom: 22px;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 15% 20%, rgba(200,155,60,0.10), transparent 18%),
+        radial-gradient(circle at 85% 70%, rgba(122,141,75,0.10), transparent 20%);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .hero h1 {
+      margin: 0 0 10px;
+      font-family: "Cairo", sans-serif;
+      font-size: clamp(30px, 5vw, 52px);
+      font-weight: 800;
+      line-height: 1.4;
+      color: #5a4b35;
+    }
+
+    .hero p {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.9;
+      color: var(--muted);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 400px 1fr;
+      gap: 22px;
+      align-items: start;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .controls {
+      padding: 22px;
+      position: sticky;
+      top: 18px;
+    }
+
+    .controls h2 {
+      margin: 0 0 6px;
+      font-family: "Cairo", sans-serif;
+      font-size: 30px;
+      font-weight: 800;
+      color: #5a4b35;
+    }
+
+    .controls .desc {
+      margin: 0 0 18px;
+      line-height: 1.9;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .owner-box {
+      background: linear-gradient(135deg, rgba(200,155,60,0.12), rgba(122,141,75,0.10));
+      border: 1px solid rgba(122,103,66,0.14);
+      border-radius: 20px;
+      padding: 16px;
+      margin-bottom: 18px;
+    }
+
+    .owner-box strong {
+      display: block;
+      font-size: 15px;
+      color: #6d5a3f;
+      margin-bottom: 8px;
+    }
+
+    .owner-box .owner-name {
+      font-family: "Cairo", sans-serif;
+      font-size: 26px;
+      font-weight: 800;
+      color: #4f412d;
+      line-height: 1.5;
+    }
+
+    .field {
+      margin-bottom: 14px;
+    }
+
+    .field label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 15px;
+      font-weight: 700;
+      color: #67563d;
+    }
+
+    .field input {
+      width: 100%;
+      border: 1px solid rgba(122, 103, 66, 0.16);
+      background: #fffdf9;
+      color: #4b3f2f;
+      border-radius: 16px;
+      padding: 15px 16px;
+      font-size: 20px;
+      font-family: "Noto Naskh Arabic", serif;
+      outline: none;
+      transition: 0.2s ease;
+    }
+
+    .field input:focus {
+      border-color: rgba(200, 155, 60, 0.55);
+      box-shadow: 0 0 0 4px rgba(200, 155, 60, 0.10);
+    }
+
+    .actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    button {
+      border: none;
+      cursor: pointer;
+      border-radius: 16px;
+      padding: 14px 16px;
+      font-size: 16px;
+      font-weight: 700;
+      font-family: "Noto Naskh Arabic", serif;
+      transition: transform 0.15s ease, opacity 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+    }
+
+    button:active {
+      transform: translateY(1px);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      color: #fffaf2;
+      box-shadow: 0 12px 24px rgba(166,125,42,0.24);
+    }
+
+    .btn-secondary {
+      background: linear-gradient(135deg, var(--olive), var(--olive-dark));
+      color: #fffef8;
+      box-shadow: 0 12px 24px rgba(96,113,58,0.20);
+    }
+
+    .preview {
+      padding: 18px;
+    }
+
+    .preview-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .preview-head h3 {
+      margin: 0;
+      font-family: "Cairo", sans-serif;
+      font-size: 26px;
+      font-weight: 800;
+      color: #5a4b35;
+    }
+
+    .preview-head span {
+      color: #7b6a51;
+      font-size: 14px;
+    }
+
+    .canvas-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(180deg, #f7f1e6, #efe6d7);
+      border: 1px solid rgba(122, 103, 66, 0.10);
+      border-radius: 22px;
+      padding: 16px;
+      overflow: hidden;
+    }
+
+    canvas {
+      width: min(100%, 566px);
+      height: auto;
+      display: block;
+      border-radius: 18px;
+      box-shadow: 0 20px 40px rgba(86, 68, 38, 0.12);
+      background: #f5efe5;
+    }
+
+    .footer {
+      margin-top: 18px;
+      text-align: center;
+      color: #7b6a51;
+      font-size: 15px;
+      line-height: 1.9;
+    }
+
+    .footer strong {
+      color: #5a4b35;
+    }
+
+    @media (max-width: 960px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .controls {
+        position: static;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .page {
+        width: min(100% - 16px, 1180px);
+        padding-top: 14px;
+      }
+
+      .hero,
+      .controls,
+      .preview {
+        padding: 16px;
+      }
+
+      .actions {
+        grid-template-columns: 1fr;
+      }
+
+      .hero p,
+      .controls .desc {
+        font-size: 15px;
+      }
+
+      .owner-box .owner-name {
+        font-size: 22px;
+      }
+    }
+  </style>
 </head>
 <body>
-<h1>This is the About page</h1>
+  <div class="page">
+    <section class="hero panel">
+      <div class="hero-content">
+        <h1>معايدات عائلة الشريدة</h1>
+        <p>
+          أهلاً بكم في صفحة المعايدات الرسمية. اكتب الاسم، وسيتم وضعه مباشرة داخل التصميم
+          بشكل أنيق
+        </p>
+      </div>
+    </section>
+
+    <section class="layout">
+      <aside class="panel controls">
+        <h2>أنشئ المعايدة</h2>
+        <p class="desc">
+          اكتب الاسم في الخانة التالية، وسيظهر مباشرة داخل التصميم.
+        </p>
+
+        <div class="owner-box">
+          <strong>كل عام وأنتم بخير وعيدكم مبارك عائلتي الكريمة</strong>
+          <div class="owner-name">راكان منصور الشريدة</div>
+        </div>
+
+        <div class="field">
+          <label for="nameInput">الاسم المراد كتابته داخل المعايدة</label>
+          <input
+            id="nameInput"
+            type="text"
+            maxlength="28"
+            placeholder="اكتب اسمك كامل هنا"
+          />
+        </div>
+
+        <div class="actions">
+          <button class="btn-primary" id="generateBtn">معاينة</button>
+          <button class="btn-secondary" id="downloadBtn">حفظ / مشاركة الصورة</button>
+        </div>
+      </aside>
+
+      <div class="panel preview">
+        <div class="preview-head">
+          <h3>المعاينة المباشرة</h3>
+        </div>
+
+        <div class="canvas-wrap">
+          <canvas id="greetingCanvas" width="566" height="705"></canvas>
+        </div>
+
+        <div class="footer">
+          جميع الحقوق محفوظة —
+          <strong>صندوق قربى</strong>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const canvas = document.getElementById("greetingCanvas");
+    const ctx = canvas.getContext("2d");
+    const nameInput = document.getElementById("nameInput");
+    const generateBtn = document.getElementById("generateBtn");
+    const downloadBtn = document.getElementById("downloadBtn");
+
+    const templateImage = new Image();
+    templateImage.src = "ddd.jpg";
+
+    let imageReady = false;
+    let fontsReady = false;
+
+    function fitFontSize(text, maxWidth, startSize, minSize, weight, family) {
+      let size = startSize;
+      while (size >= minSize) {
+        ctx.font = `${weight} ${size}px "${family}"`;
+        const width = ctx.measureText(text).width;
+        if (width <= maxWidth) return size;
+        size -= 1;
+      }
+      return minSize;
+    }
+
+    function drawRoundedClip(x, y, w, h, r) {
+      ctx.beginPath();
+      ctx.moveTo(x + r, y);
+      ctx.lineTo(x + w - r, y);
+      ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+      ctx.lineTo(x + w, y + h - r);
+      ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+      ctx.lineTo(x + r, y + h);
+      ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+      ctx.lineTo(x, y + r);
+      ctx.quadraticCurveTo(x, y, x + r, y);
+      ctx.closePath();
+    }
+
+    function renderGreeting() {
+      if (!imageReady || !fontsReady) return;
+
+      const name = (nameInput.value || "").trim() || "الاسم يظهر هنا";
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(templateImage, 0, 0, canvas.width, canvas.height);
+
+      const box = {
+        x: 140,
+        y: 520,
+        w: 293,
+        h: 47
+      };
+
+      ctx.save();
+      drawRoundedClip(box.x, box.y, box.w, box.h, 8);
+      ctx.clip();
+
+      const fontSize = fitFontSize(name, box.w - 18, 30, 18, "700", "Cairo");
+
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillStyle = "#3f3425";
+      ctx.font = `700 ${fontSize}px "Cairo"`;
+
+      ctx.fillText(
+        name,
+        box.x + box.w / 2,
+        box.y + box.h / 2 + 1
+      );
+
+      ctx.restore();
+    }
+
+    function canvasToBlob() {
+      return new Promise((resolve, reject) => {
+        if (!canvas.toBlob) {
+          try {
+            const dataUrl = canvas.toDataURL("image/png");
+            const byteString = atob(dataUrl.split(",")[1]);
+            const mimeString = dataUrl.split(",")[0].split(":")[1].split(";")[0];
+            const ab = new ArrayBuffer(byteString.length);
+            const ia = new Uint8Array(ab);
+
+            for (let i = 0; i < byteString.length; i++) {
+              ia[i] = byteString.charCodeAt(i);
+            }
+
+            resolve(new Blob([ab], { type: mimeString }));
+          } catch (err) {
+            reject(err);
+          }
+          return;
+        }
+
+        canvas.toBlob((blob) => {
+          if (blob) resolve(blob);
+          else reject(new Error("تعذر إنشاء الصورة"));
+        }, "image/png");
+      });
+    }
+
+    async function downloadImage() {
+      try {
+        renderGreeting();
+
+        const name = (nameInput.value || "معايدة").trim();
+        const safeName = name
+          .replace(/[^\u0600-\u06FFa-zA-Z0-9\s_-]/g, "")
+          .replace(/\s+/g, "-");
+
+        const fileName = `معايدة-الشريدة-${safeName || "name"}.png`;
+        const blob = await canvasToBlob();
+        const file = new File([blob], fileName, { type: "image/png" });
+
+        if (
+          navigator.canShare &&
+          navigator.share &&
+          navigator.canShare({ files: [file] })
+        ) {
+          await navigator.share({
+            files: [file],
+            title: "معايدة عائلة الشريدة",
+            text: "تم إنشاء المعايدة بنجاح"
+          });
+          return;
+        }
+
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = fileName;
+        link.rel = "noopener";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        setTimeout(() => {
+          URL.revokeObjectURL(url);
+        }, 1500);
+      } catch (err) {
+        try {
+          const dataUrl = canvas.toDataURL("image/png");
+          const win = window.open();
+
+          if (win) {
+            win.document.write(`
+              <html dir="rtl">
+                <head>
+                  <meta charset="UTF-8" />
+                  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                  <title>حفظ الصورة</title>
+                  <style>
+                    body {
+                      margin: 0;
+                      padding: 20px;
+                      font-family: sans-serif;
+                      text-align: center;
+                      background: #f6f2ea;
+                    }
+                    .wrap {
+                      max-width: 720px;
+                      margin: 0 auto;
+                    }
+                    img {
+                      max-width: 100%;
+                      height: auto;
+                      border-radius: 12px;
+                      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+                    }
+                    p {
+                      color: #5a4b35;
+                      line-height: 1.8;
+                      font-size: 18px;
+                    }
+                  </style>
+                </head>
+                <body>
+                  <div class="wrap">
+                    <p>اضغط مطولاً على الصورة ثم اختر حفظ الصورة</p>
+                    <img src="${dataUrl}" alt="المعايدة" />
+                  </div>
+                </body>
+              </html>
+            `);
+            win.document.close();
+          } else {
+            alert("تعذر فتح نافذة الحفظ. جرّب استخدام متصفح أحدث.");
+          }
+        } catch (e) {
+          alert("تعذر حفظ الصورة على هذا الجهاز.");
+        }
+      }
+    }
+
+    templateImage.onload = () => {
+      imageReady = true;
+      renderGreeting();
+    };
+
+    templateImage.onerror = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "#8b6f45";
+      ctx.font = '700 22px "Noto Naskh Arabic"';
+      ctx.textAlign = "center";
+      ctx.fillText("تعذر تحميل الصورة ddd.jpg", canvas.width / 2, canvas.height / 2 - 16);
+      ctx.font = '400 18px "Noto Naskh Arabic"';
+      ctx.fillText("ضع الصورة في نفس المجلد مع ملف index.html", canvas.width / 2, canvas.height / 2 + 18);
+    };
+
+    document.fonts.ready.then(() => {
+      fontsReady = true;
+      renderGreeting();
+    });
+
+    generateBtn.addEventListener("click", renderGreeting);
+
+    if (downloadBtn) {
+      downloadBtn.addEventListener("click", downloadImage);
+    }
+
+    nameInput.addEventListener("input", renderGreeting);
+    nameInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        renderGreeting();
+      }
+    });
+  </script>
 </body>
 </html>
